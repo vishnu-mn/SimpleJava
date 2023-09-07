@@ -62,6 +62,9 @@ pipeline {
     post {
         success {
             echo "Pipeline executed successfully!"
+	    mail to: "vishnu.m321@gmail.com",
+	    subject: "Build status",
+	    body: "successful"
         }
         failure {
             echo "Pipeline execution failed!"
