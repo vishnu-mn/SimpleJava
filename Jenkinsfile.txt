@@ -70,6 +70,10 @@ pipeline {
         }
         failure {
             echo "Pipeline execution failed!"
+	    emailext attachmentsPattern: '**/build.log'
+	    mail to: "vishnu.m321@gmail.com",
+	    subject: "Build status",
+	    body: "failure"
         }
     }
 }
