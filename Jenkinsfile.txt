@@ -4,7 +4,7 @@ pipeline {
     environment {
         DIRECTORY_PATH = "/path/to/code/directory"
         TESTING_ENVIRONMENT = "testing-environment"
-        PRODSCTION_ENVIRONMENT = "your-name-production"
+        PRODUCTION_ENVIRONMENT = "your-name-production"
     }
     
     stages {
@@ -62,23 +62,17 @@ pipeline {
     post {
         success {
             echo "Pipeline executed successfully!"
-	    script {
-		def consoleOutput = currentBuild.rawBuild.getLogFile()
-	    	emailext attachments: [fileAttachment(consoleOutput, "JenkinsConsoleOutput.txt")],
-	    		to: "vishnu.m321@gmail.com",
-	    		subject: "Build status",
-	    		body: "successful"
-		}
+	    	emailext attachLog: true,
+			body: 'successful',
+			subject: 'Build status',
+	    		to: 'vishnu.m321@gmail.com'	
         }
         failure {
             echo "Pipeline execution failed!"
-	    script {
-		def consoleOutput = currentBuild.rawBuild.getLogFile()
-	    	emailext attachments: [fileAttachment(consoleOutput, "JenkinsConsoleOutput.txt")],
-	    	to: "vishnu.m321@gmail.com",
-	    	subject: "Build status",
-	    	body: "failure"
-		}
+	    	emailext attachLog: true,
+		body: "failure",
+		subject: "Build status",
+	    	to: "vishnu.m321@gmail.com"
         }
     }
 }
