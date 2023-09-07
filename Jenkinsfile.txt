@@ -78,6 +78,7 @@ pipeline {
 	    	to: "vishnu.m321@gmail.com",
 	    	subject: "Build status",
 	    	body: "failure"
+		}
         }
     }
 }
