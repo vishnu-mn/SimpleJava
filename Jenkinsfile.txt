@@ -63,17 +63,17 @@ pipeline {
     post {
         success {
             echo "Pipeline executed successfully!"
-	    emailext attachmentsPattern: '**/build.log'
-	    mail to: "vishnu.m321@gmail.com",
-	    subject: "Build status",
-	    body: "successful"
+	    emailext attachmentsPattern: '**/build.log',
+	    	mail to: "vishnu.m321@gmail.com",
+	    	subject: "Build status",
+	    	body: "successful"
         }
         failure {
             echo "Pipeline execution failed!"
-	    emailext attachmentsPattern: '**/build.log'
-	    mail to: "vishnu.m321@gmail.com",
-	    subject: "Build status",
-	    body: "failure"
+	    emailext attachmentsPattern: '**/build.log',
+	    	mail to: "vishnu.m321@gmail.com",
+	    	subject: "Build status",
+	    	body: "failure"
         }
     }
 }
