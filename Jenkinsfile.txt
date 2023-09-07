@@ -14,7 +14,6 @@ pipeline {
                 echo "Fetching the source code from the directory path specified by the environment variable: ${env.DIRECTORY_PATH}"
                 echo "Compiling the code and generate any necessary artifacts"
 				echo "Build stage completed"
-		archiveArtifacts artifacts: '**/build.log', allowEmptyArchive: true
             }
         }
         
@@ -63,14 +62,19 @@ pipeline {
     post {
         success {
             echo "Pipeline executed successfully!"
-	    emailext attachmentsPattern: '**/build.log',
-	    	to: "vishnu.m321@gmail.com",
-	    	subject: "Build status",
-	    	body: "successful"
+	    script {
+		def consoleOutput = currentBuild.rawBuild.getLogFile()
+	    	emailext attachments: [fileAttachment(consoleOutput, "JenkinsConsoleOutput.txt")],
+	    		to: "vishnu.m321@gmail.com",
+	    		subject: "Build status",
+	    		body: "successful"
+		}
         }
         failure {
             echo "Pipeline execution failed!"
-	    emailext attachmentsPattern: '**/build.log',
+	    script {
+		def consoleOutput = currentBuild.rawBuild.getLogFile()
+	    	emailext attachments: [fileAttachment(consoleOutput, "JenkinsConsoleOutput.txt")],
 	    	to: "vishnu.m321@gmail.com",
 	    	subject: "Build status",
 	    	body: "failure"
